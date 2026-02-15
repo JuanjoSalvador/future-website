@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const route = useRoute();
 const isBlogPost = computed(() => route.name === 'blog-rkey');
-
 </script>
+
 <template>
   <div>
     <AppHeader />
@@ -10,7 +10,10 @@ const isBlogPost = computed(() => route.name === 'blog-rkey');
       <h1>Blog</h1>
     </template>
     <template v-else>
-      <RouterLink to="/blog" class="back-to-blog">← Back to blog</RouterLink>
+      <RouterLink
+        to="/blog"
+        class="back-to-blog"
+      >← Back to blog</RouterLink>
     </template>
     <slot />
     <BlogFooter />

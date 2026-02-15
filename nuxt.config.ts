@@ -1,7 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
-  devtools: { enabled: true },
 
   modules: [
     '@nuxt/eslint',
@@ -13,19 +11,9 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/robots',
-    'nuxt-og-image'
+    'nuxt-og-image',
   ],
-
-  eslint: {
-    config: {
-      stylistic: {
-        indent: 2,
-        semi: true,
-        arrowParens: true,
-        braceStyle: '1tbs',
-      },
-    },
-  },
+  devtools: { enabled: true },
 
   app: {
     head: {
@@ -34,7 +22,7 @@ export default defineNuxtConfig({
       htmlAttrs: {
         lang: 'en',
       },
-    }
+    },
   },
 
   css: ['~/assets/css/main.css'],
@@ -46,7 +34,19 @@ export default defineNuxtConfig({
         service: 'https://bsky.social',
         repo: '',
         collection: 'com.whtwnd.blog.entry',
-      }
-    }
-  }
-})
+      },
+    },
+  },
+  compatibilityDate: '2025-07-15',
+
+  eslint: {
+    config: {
+      stylistic: {
+        indent: 2,
+        semi: true,
+        arrowParens: true,
+        braceStyle: '1tbs',
+      },
+    },
+  },
+});

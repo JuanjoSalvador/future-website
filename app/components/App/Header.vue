@@ -27,22 +27,37 @@ const links = [
         height="36"
       />
       <ul>
-        <li v-for="link in links" :key="link.to">
+        <li
+          v-for="link in links"
+          :key="link.to"
+        >
           <RouterLink :to="link.to">
             {{ link.label }}
           </RouterLink>
         </li>
       </ul>
-      <div class="spacer"/>
+      <div class="spacer" />
       <ul>
         <li>
-          <a href="https://bsky.app/profile/sybers.fr" target="_blank">
-            <Icon size="1.5rem" name="mingcute:bluesky-social-line" />
+          <a
+            href="https://bsky.app/profile/sybers.fr"
+            target="_blank"
+          >
+            <Icon
+              size="1.5rem"
+              name="mingcute:bluesky-social-line"
+            />
           </a>
         </li>
         <li>
-          <a href="https://github.com/sybers" target="_blank">
-            <Icon size="1.5rem" name="mingcute:github-line" />
+          <a
+            href="https://github.com/sybers"
+            target="_blank"
+          >
+            <Icon
+              size="1.5rem"
+              name="mingcute:github-line"
+            />
           </a>
         </li>
       </ul>

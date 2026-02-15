@@ -1,4 +1,4 @@
-import { AtpAgent, AtUri } from '@atproto/api'
+import { AtpAgent, AtUri } from '@atproto/api';
 
 export function readingTime(text: string): string {
   const words = text.trim().split(/\s+/).length;
@@ -11,13 +11,13 @@ function shouldShowPost({ post, isProduction }: { post: PostEntry; isProduction:
 }
 
 type PostEntry = {
-  title: string
-  content: string
-  createdAt: string
-  visibility: 'public' | 'url' | 'author'
-  readingTime: string
-  rkey: string
-}
+  title: string;
+  content: string;
+  createdAt: string;
+  visibility: 'public' | 'url' | 'author';
+  readingTime: string;
+  rkey: string;
+};
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
@@ -25,16 +25,16 @@ export default defineEventHandler(async (event) => {
 
   const atpConfig = runtimeConfig.public.atproto;
 
-  const agent = new AtpAgent({ service: atpConfig.service })
-  
-  const { limit = '10', cursor } = getQuery(event)
+  const agent = new AtpAgent({ service: atpConfig.service });
+
+  const { limit = '10', cursor } = getQuery(event);
 
   const res = await agent.com.atproto.repo.listRecords({
     repo: atpConfig.repo,
     collection: atpConfig.collection,
     limit: Number(limit),
     cursor: cursor as string | undefined,
-  })
+  });
 
   const posts = res.data.records.map((record) => {
     const uri = new AtUri(record.uri);
@@ -52,5 +52,5 @@ export default defineEventHandler(async (event) => {
   return {
     posts,
     cursor: res.data.cursor,
-  }
-})
+  };
+});

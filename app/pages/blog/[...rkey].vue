@@ -3,8 +3,8 @@ const runtimeConfig = useRuntimeConfig();
 const route = useRoute();
 
 const { data } = await useAsyncData(
-  () => `blog-post-${route.params.rkey}`, 
-  () => $fetch(`/api/post/${route.params.rkey}`)
+  () => `blog-post-${route.params.rkey}`,
+  () => $fetch(`/api/post/${route.params.rkey}`),
 );
 
 if (!data.value) {
@@ -12,7 +12,7 @@ if (!data.value) {
     fatal: true,
     statusCode: 404,
     statusMessage: 'Post not found',
-  })
+  });
 }
 
 useSeoMeta({
@@ -42,7 +42,7 @@ const postLabels = computed(() => {
   const labels = [
     formatDate(data.value?.createdAt),
     data.value?.readingTime,
-    visibilityLabel.value
+    visibilityLabel.value,
   ];
 
   return labels.filter(Boolean).join(' · ');
@@ -59,9 +59,22 @@ const editLink = computed(() => {
 
 <template>
   <div>
-    <h1 class="blog-post-title">{{ data?.title }}</h1>
-    <p class="blog-post-labels">{{ postLabels }} <a v-if="editLink" :href="editLink" target="_blank" class="blog-post-edit">(edit)</a></p>
-    <MDC v-if="data" :value="data.content" tag="article" />
+    <h1 class="blog-post-title">
+      {{ data?.title }}
+    </h1>
+    <p class="blog-post-labels">
+      {{ postLabels }} <a
+        v-if="editLink"
+        :href="editLink"
+        target="_blank"
+        class="blog-post-edit"
+      >(edit)</a>
+    </p>
+    <MDC
+      v-if="data"
+      :value="data.content"
+      tag="article"
+    />
   </div>
 </template>
 

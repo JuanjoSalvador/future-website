@@ -1,13 +1,13 @@
-import { AtpAgent } from "@atproto/api";
+import { AtpAgent } from '@atproto/api';
 
 type PostEntry = {
-  title: string
-  content: string
-  createdAt: string
-  visibility: 'public' | 'url' | 'author'
-  readingTime: string
-  rkey: string
-}
+  title: string;
+  content: string;
+  createdAt: string;
+  visibility: 'public' | 'url' | 'author';
+  readingTime: string;
+  rkey: string;
+};
 
 export function readingTime(text: string): string {
   const words = text.trim().split(/\s+/).length;
@@ -25,35 +25,35 @@ export default defineEventHandler(async (event) => {
 
   const atpConfig = runtimeConfig.public.atproto;
 
-  const atpAgent = new AtpAgent({ service: atpConfig.service })
-  
-    const rkey = getRouterParam(event, 'rkey')
+  const atpAgent = new AtpAgent({ service: atpConfig.service });
 
-    if (!rkey) {
-      throw createError({
-        status: 400,
-        statusText: 'rkey is required',
-      })
-    }
-  
-    const { data } = await atpAgent.com.atproto.repo.getRecord({
-      repo: atpConfig.repo,
-      collection: atpConfig.collection,
-      rkey,
+  const rkey = getRouterParam(event, 'rkey');
+
+  if (!rkey) {
+    throw createError({
+      status: 400,
+      statusText: 'rkey is required',
     });
+  }
 
-    const postEntry: PostEntry = {
-      title: data.value.title as string,
-      content: data.value.content as string,
-      createdAt: data.value.createdAt as string,
-      visibility: data.value.visibility as 'public' | 'url' | 'author',
-      readingTime: readingTime(data.value.content as string),
-      rkey: data.value.rkey as string,
-    }
+  const { data } = await atpAgent.com.atproto.repo.getRecord({
+    repo: atpConfig.repo,
+    collection: atpConfig.collection,
+    rkey,
+  });
 
-    if (!shouldShowPost({ post: postEntry, isProduction })) {
-      return undefined;
-    }
+  const postEntry: PostEntry = {
+    title: data.value.title as string,
+    content: data.value.content as string,
+    createdAt: data.value.createdAt as string,
+    visibility: data.value.visibility as 'public' | 'url' | 'author',
+    readingTime: readingTime(data.value.content as string),
+    rkey: data.value.rkey as string,
+  };
 
-    return postEntry;
-  })
+  if (!shouldShowPost({ post: postEntry, isProduction })) {
+    return undefined;
+  }
+
+  return postEntry;
+});
