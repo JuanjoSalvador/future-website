@@ -1,23 +1,5 @@
 import { AtpAgent, AtUri } from '@atproto/api';
-
-export function readingTime(text: string): string {
-  const words = text.trim().split(/\s+/).length;
-  const minutes = Math.max(1, Math.ceil(words / 200));
-  return `${minutes} min read`;
-}
-
-function shouldShowPost({ post, isProduction }: { post: PostEntry; isProduction: boolean }) {
-  return post.visibility === 'public' || !isProduction;
-}
-
-type PostEntry = {
-  title: string;
-  content: string;
-  createdAt: string;
-  visibility: 'public' | 'url' | 'author';
-  readingTime: string;
-  rkey: string;
-};
+import { isPostListable } from '../../shared/utils/posts-visibility';
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
@@ -47,7 +29,7 @@ export default defineEventHandler(async (event) => {
       readingTime: readingTime(record.value.content as string),
       rkey: uri.rkey,
     } as PostEntry;
-  }).filter((post) => shouldShowPost({ post, isProduction }));
+  }).filter((post) => isPostListable({ post, isProduction }));
 
   return {
     posts,

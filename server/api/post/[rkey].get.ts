@@ -1,23 +1,5 @@
 import { AtpAgent } from '@atproto/api';
-
-type PostEntry = {
-  title: string;
-  content: string;
-  createdAt: string;
-  visibility: 'public' | 'url' | 'author';
-  readingTime: string;
-  rkey: string;
-};
-
-export function readingTime(text: string): string {
-  const words = text.trim().split(/\s+/).length;
-  const minutes = Math.max(1, Math.ceil(words / 200));
-  return `${minutes} min read`;
-}
-
-function shouldShowPost({ post, isProduction }: { post: PostEntry; isProduction: boolean }) {
-  return post.visibility === 'public' || !isProduction;
-}
+import { isPostAccessible } from '../../../shared/utils/posts-visibility';
 
 export default defineEventHandler(async (event) => {
   const runtimeConfig = useRuntimeConfig(event);
@@ -51,7 +33,7 @@ export default defineEventHandler(async (event) => {
     rkey: data.value.rkey as string,
   };
 
-  if (!shouldShowPost({ post: postEntry, isProduction })) {
+  if (!isPostAccessible({ post: postEntry, isProduction })) {
     return undefined;
   }
 
