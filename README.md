@@ -1,6 +1,6 @@
 # sybers.fr
 
-Personal website and blog of [sybers](https://sybers.fr).
+[sybers](https://sybers.fr) personal space on the internet.
 
 Built with [Nuxt](https://nuxt.com/), blog posts are fetched from the [AT Protocol](https://atproto.com/) and written using the [WhiteWind](https://whtwnd.com/) lexicons.
 
@@ -15,6 +15,8 @@ Copy the `.env.example` file to `.env` and fill in the values:
 ```bash
 cp .env.example .env
 ```
+
+Add your own configuration values to the `.env` file to customize the website.
 
 ## Development
 
@@ -33,3 +35,7 @@ Preview the production build locally:
 ```bash
 pnpm preview
 ```
+
+## License
+
+[MIT](./LICENSE.md)
